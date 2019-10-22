@@ -7,7 +7,7 @@ jobs:
     steps:
       - checkout
       - aws-cli/setup:
-          profile-name: example
+          profile-name: cf-test
           aws-region: AWS_DEFAULT_REGION
           aws-access-key-id: AWS_ACCESS_KEY_ID
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
@@ -15,8 +15,11 @@ jobs:
       - run:
           name: Validating CloudFormation code 
           command: | 
-            ls ${HOME}
-            aws cloudformation validate-template --template-body file:///${HOME}/project/products/EC2TestTemplate.yml
+            echo "Validating all templates in the ${HOME}/project/products directory..."
+            for template in `ls ${HOME}/project/products/yml`
+            do
+              aws cloudformation validate-template --template-body file:///$template
+            do
 
 workflows:
   version: 2
