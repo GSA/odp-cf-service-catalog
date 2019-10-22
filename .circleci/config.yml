@@ -19,7 +19,7 @@ jobs:
             for template in `ls ${HOME}/project/products/yml`
             do
               aws cloudformation validate-template --template-body file:///$template
-            do
+            done
 
 workflows:
   version: 2
