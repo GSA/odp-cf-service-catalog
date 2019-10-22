@@ -8,9 +8,9 @@ jobs:
       - checkout
       - aws-cli/setup:
           profile-name: example
-          aws-region: ${REGION}
-          aws-access-key-id: ${ACCESS_KEY_ID}
-          aws-secret-access-key: ${ACCESS_KEY_SECRET}
+          aws-region: REGION
+          aws-access-key-id: ACCESS_KEY_ID
+          aws-secret-access-key: ACCESS_KEY_SECRET
       - run:
           name: Validating CloudFormation code 
           command: | 
