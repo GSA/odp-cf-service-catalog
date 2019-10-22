@@ -40,10 +40,10 @@ jobs:
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
           configure-default-region: true
       - run:
-          name: Validating CloudFormation code 
+          name: Deploy product templates
           command: | 
             echo "Copying all product templates to the s3 bucket responsible for hosting the templates."
-            aws s3 ${HOME}/project/service_catalog/ s3://${PRODUCT_S3_BUCKET}/ --recursive --exclude "*" --include "*.yml
+            aws s3 ${HOME}/project/service_catalog/ s3://${PRODUCT_S3_BUCKET}/ --recursive --exclude "*" --include "*.yml"
             
 
          
@@ -58,4 +58,6 @@ workflows:
             branches:
               only:
                 # This is the list of branches which will trigger a terraform run.
-                - master      
+                - master   
+          requires:
+            - test-cloudformations                     
