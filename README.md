@@ -4,9 +4,13 @@
 
 This project's purpose is to provide Cloud Formations templates and  CI Pipeline required configure the ODP team AWS Service Catalog and Products.
 
-The general workflow is described below:
+The workflow is described below:
 
-* 
+* On all commits code tests are run agains all AWS Cloud Formations templates the following directories:
+  * `products` - Directory containing all of the templates 
+  * `service_catalog` - Contains the Cloud Formations template to configure the 
+* On all commits to branch `master` deploy the template(s) in the `service_catalog`  directory to update and changes to the AWS Service Catalog.
+* On all commits to branch `master` redeploy the templates in the product(s) directory
 
 ## Table of Contents <a name="s2"></a>
 
@@ -57,7 +61,9 @@ It is not required to develop from a Docker container, but for the sake of setup
 To test you Cloud Formations code run these commands:
 
 ```
+#Test template in bucket
 aws cloudformation validate-template --template-url https://s3.amazonaws.com/cloudformation-templates-us-east-1/S3_Bucket.template
-
+#Test template local
+aws cloudformation validate-template --template-body file:///home/templates/template.yml
 
 ```
