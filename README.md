@@ -1,14 +1,14 @@
-# ODP Cloud Formations - AWS Service Catalog
+# ODP CloudFormation - AWS Service Catalog
 
 ## Overview <a name="s1"></a>
 
-This project's purpose is to provide Cloud Formations templates and  CI Pipeline required configure the ODP team AWS Service Catalog and Products.
+This project's purpose is to provide CloudFormation templates and  CI Pipeline required configure the ODP team AWS Service Catalog and Products.
 
 The workflow is described below:
 
-* On all commits code tests are run agains all AWS Cloud Formations templates the following directories:
+* On all commits code tests are run agains all AWS CloudFormation templates the following directories:
   * `products` - Directory containing all of the templates 
-  * `service_catalog` - Contains the Cloud Formations template to configure the 
+  * `service_catalog` - Contains the CloudFormation template to configure the 
 * On all commits to branch `master` deploy the template(s) in the `service_catalog`  directory to update and changes to the AWS Service Catalog.
 * On all commits to branch `master` redeploy the templates in the product(s) directory
 
@@ -58,7 +58,7 @@ It is not required to develop from a Docker container, but for the sake of setup
 
 ### Manual tests
 
-To test you Cloud Formations code run these commands:
+To test your CloudFormation code run these commands:
 
 ```
 #Test template in bucket
