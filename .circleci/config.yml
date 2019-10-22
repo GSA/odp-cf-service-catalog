@@ -52,7 +52,8 @@ workflows:
   version: 2
   aws-cli:
     jobs:
-      - test-cloudformations:
+      - test-cloudformations
+      - update-templates:
           filters:
             branches:
               only:
