@@ -18,6 +18,14 @@ jobs:
             echo "Validating all templates in the ${HOME}/project/products directory..."
             for template in `ls ${HOME}/project/products/*yml`
             do
+              echo "Validating CloudFormation template: $template"
+              aws cloudformation validate-template --template-body file:///$template
+            done
+
+            echo "Validating all templates in the ${HOME}/project/service_catalog directory..."
+            for template in `ls ${HOME}/project/service_catalog/*yml`
+            do
+              echo "Validating CloudFormation template: $template"
               aws cloudformation validate-template --template-body file:///$template
             done
 
