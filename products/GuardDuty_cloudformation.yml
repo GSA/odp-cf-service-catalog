@@ -1,0 +1,11 @@
+Resources:
+  MyDetector:
+    Type: AWS::GuardDuty::Detector
+    Properties:
+        Enable: True
+
+  MyMaster: 
+    Type: AWS::GuardDuty::Master
+    Properties:
+        DetectorId: !Ref MyDetector
+        MasterId: "752281881774"

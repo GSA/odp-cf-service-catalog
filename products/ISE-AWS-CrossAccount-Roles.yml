@@ -1,0 +1,272 @@
+AWSTemplateFormatVersion: 2010-09-09
+Metadata:
+  'AWS::CloudFormation::Designer':
+    6385933f-5631-4a0d-a36e-829395d6da66:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 520
+        'y': 30
+      z: 0
+      embeds: []
+    ea8e1da2-cb01-4526-acb1-e3bf9be4a8a3:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 520
+        'y': 150
+      z: 0
+      embeds: []
+    23ef594a-603f-4c67-ba4f-ef8926544990:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 520
+        'y': 270
+      z: 0
+      embeds: []
+    294d6068-f817-42ce-9d91-5d258eec4b00:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 150
+        'y': 120
+      z: 0
+      embeds: []
+      isassociatedwith:
+        - 6385933f-5631-4a0d-a36e-829395d6da66
+Resources:
+  IAMR327H:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS:
+                - 'arn:aws:iam::110570717393:root'
+            Action: 'sts:AssumeRole'
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/job-function/ViewOnlyAccess'
+      RoleName: OCISO-Incident-Response
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 6385933f-5631-4a0d-a36e-829395d6da66
+  IAMRQ8C1:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS:
+                - 'arn:aws:iam::110570717393:root'
+            Action: 'sts:AssumeRole'
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/job-function/ViewOnlyAccess'
+      RoleName: OCISO-SecOps
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: ea8e1da2-cb01-4526-acb1-e3bf9be4a8a3
+  IAMR11J2I:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS:
+                - 'arn:aws:iam::110570717393:root'
+            Action: 'sts:AssumeRole'
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/job-function/ViewOnlyAccess'
+      RoleName: OCISO-ISSO
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 23ef594a-603f-4c67-ba4f-ef8926544990
+    Condition: ''
+  IAMP2ZG0B:
+    Type: 'AWS::IAM::Policy'
+    Properties:
+      PolicyName: OCISO-Incident-Response
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Sid: Stmt1526942412380
+            Action:
+              - 'cloudtrail:AddTags'
+              - 'cloudtrail:CreateTrail'
+              - 'cloudtrail:DescribeTrails'
+              - 'cloudtrail:GetEventSelectors'
+              - 'cloudtrail:GetTrailStatus'
+              - 'cloudtrail:ListPublicKeys'
+              - 'cloudtrail:ListTags'
+              - 'cloudtrail:LookupEvents'
+              - 'cloudtrail:PutEventSelectors'
+              - 'cloudtrail:RemoveTags'
+              - 'cloudtrail:StartLogging'
+              - 'cloudtrail:StopLogging'
+              - 'cloudtrail:UpdateTrail'
+            Effect: Allow
+            Resource: '*'
+          - Sid: Stmt1526942617843
+            Action: 'logs:*'
+            Effect: Allow
+            Resource: '*'
+          - Sid: Stmt1526942626372
+            Action: 'events:*'
+            Effect: Allow
+            Resource: '*'
+          - Sid: Stmt1526942660359
+            Action: 'cloudwatch:*'
+            Effect: Allow
+            Resource: '*'
+          - Sid: Stmt1526942726269
+            Action: 'guardduty:*'
+            Effect: Allow
+            Resource: '*'
+          - Sid: Stmt1526942935734
+            Action:
+              - 's3:AbortMultipartUpload'
+              - 's3:CreateBucket'
+              - 's3:GetAccelerateConfiguration'
+              - 's3:GetAnalyticsConfiguration'
+              - 's3:GetBucketAcl'
+              - 's3:GetBucketCORS'
+              - 's3:GetBucketLocation'
+              - 's3:GetBucketLogging'
+              - 's3:GetBucketNotification'
+              - 's3:GetBucketPolicy'
+              - 's3:GetBucketRequestPayment'
+              - 's3:GetBucketTagging'
+              - 's3:GetBucketVersioning'
+              - 's3:GetBucketWebsite'
+              - 's3:GetInventoryConfiguration'
+              - 's3:GetIpConfiguration'
+              - 's3:GetLifecycleConfiguration'
+              - 's3:GetMetricsConfiguration'
+              - 's3:GetObject'
+              - 's3:GetObjectAcl'
+              - 's3:GetObjectTagging'
+              - 's3:GetObjectTorrent'
+              - 's3:GetObjectVersion'
+              - 's3:GetObjectVersionAcl'
+              - 's3:GetObjectVersionForReplication'
+              - 's3:GetObjectVersionTagging'
+              - 's3:GetObjectVersionTorrent'
+              - 's3:GetReplicationConfiguration'
+              - 's3:HeadBucket'
+              - 's3:ListAllMyBuckets'
+              - 's3:ListBucket'
+              - 's3:ListBucketByTags'
+              - 's3:ListBucketMultipartUploads'
+              - 's3:ListBucketVersions'
+              - 's3:ListMultipartUploadParts'
+              - 's3:ListObjects'
+              - 's3:ObjectOwnerOverrideToBucketOwner'
+              - 's3:PutAccelerateConfiguration'
+              - 's3:PutAnalyticsConfiguration'
+              - 's3:PutBucketAcl'
+              - 's3:PutBucketCORS'
+              - 's3:PutBucketLogging'
+              - 's3:PutBucketNotification'
+              - 's3:PutBucketPolicy'
+              - 's3:PutBucketRequestPayment'
+              - 's3:PutBucketTagging'
+              - 's3:PutBucketVersioning'
+              - 's3:PutBucketWebsite'
+              - 's3:PutInventoryConfiguration'
+              - 's3:PutIpConfiguration'
+              - 's3:PutLifecycleConfiguration'
+              - 's3:PutMetricsConfiguration'
+              - 's3:PutObject'
+              - 's3:PutObjectAcl'
+              - 's3:PutObjectTagging'
+              - 's3:PutObjectVersionAcl'
+              - 's3:PutObjectVersionTagging'
+              - 's3:PutReplicationConfiguration'
+              - 's3:ReplicateDelete'
+              - 's3:ReplicateObject'
+              - 's3:ReplicateTags'
+              - 's3:RestoreObject'
+            Effect: Allow
+            Resource: '*'
+          - Sid: Stmt1526943061737
+            Action:
+              - 'config:DeliverConfigSnapshot'
+              - 'config:DescribeComplianceByConfigRule'
+              - 'config:DescribeComplianceByResource'
+              - 'config:DescribeConfigRuleEvaluationStatus'
+              - 'config:DescribeConfigRules'
+              - 'config:DescribeConfigurationRecorderStatus'
+              - 'config:DescribeConfigurationRecorders'
+              - 'config:DescribeDeliveryChannelStatus'
+              - 'config:DescribeDeliveryChannels'
+              - 'config:GetComplianceDetailsByConfigRule'
+              - 'config:GetComplianceDetailsByResource'
+              - 'config:GetComplianceSummaryByConfigRule'
+              - 'config:GetComplianceSummaryByResourceType'
+              - 'config:GetResourceConfigHistory'
+              - 'config:GetResources'
+              - 'config:GetTagKeys'
+              - 'config:ListDiscoveredResources'
+              - 'config:PutConfigRule'
+              - 'config:PutConfigurationRecorder'
+              - 'config:PutDeliveryChannel'
+              - 'config:PutEvaluations'
+              - 'config:StartConfigRulesEvaluation'
+              - 'config:StartConfigurationRecorder'
+              - 'config:StopConfigurationRecorder'
+            Effect: Allow
+            Resource: '*'
+          - Sid: Stmt1526943156006
+            Action:
+              - 'lambda:AddPermission'
+              - 'lambda:CreateAlias'
+              - 'lambda:CreateEventSourceMapping'
+              - 'lambda:CreateFunction'
+              - 'lambda:EnableReplication'
+              - 'lambda:GetAccountSettings'
+              - 'lambda:GetAlias'
+              - 'lambda:GetEventSourceMapping'
+              - 'lambda:GetFunction'
+              - 'lambda:GetFunctionConfiguration'
+              - 'lambda:GetPolicy'
+              - 'lambda:InvokeAsync'
+              - 'lambda:InvokeFunction'
+              - 'lambda:ListAliases'
+              - 'lambda:ListEventSourceMappings'
+              - 'lambda:ListFunctions'
+              - 'lambda:ListTags'
+              - 'lambda:ListVersionsByFunction'
+              - 'lambda:PublishVersion'
+              - 'lambda:PutFunctionConcurrency'
+              - 'lambda:RemovePermission'
+              - 'lambda:TagResource'
+              - 'lambda:UntagResource'
+              - 'lambda:UpdateAlias'
+              - 'lambda:UpdateEventSourceMapping'
+              - 'lambda:UpdateFunctionCode'
+              - 'lambda:UpdateFunctionConfiguration'
+            Effect: Allow
+            Resource: '*'
+          - Sid: Stmt1526943464554
+            Action: 'trustedadvisor:*'
+            Effect: Allow
+            Resource: '*'
+          - Sid: Stmt1526943519194
+            Action: 'inspector:*'
+            Effect: Allow
+            Resource: '*'
+      Roles:
+        - !Ref IAMR327H
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 294d6068-f817-42ce-9d91-5d258eec4b00

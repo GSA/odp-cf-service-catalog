@@ -1,0 +1,31 @@
+version: 2.1
+orbs:
+  aws-cli: circleci/aws-cli@0.1.16
+jobs:
+  test-cloudformations:
+    executor: aws-cli/default
+    steps:
+      - checkout
+      - aws-cli/setup:
+          profile-name: example
+          aws-region: ${REGION}
+          aws-access-key-id: ${ACCESS_KEY_ID}
+          aws-secret-access-key: ${ACCESS_KEY_SECRET}
+
+      - run:
+        name: Validating CloudFormation code 
+        command: | 
+          ls ${HOME}
+          aws cloudformation validate-template --template-body file:///${HOME}/project/products/EC2TestTemplate.yml
+
+workflows:
+  version: 2
+  aws-cli:
+    jobs:
+      - test-cloudformations:
+          context: aws
+          filters:
+            branches:
+              only:
+                # This is the list of branches which will trigger a terraform run.
+                - master      
