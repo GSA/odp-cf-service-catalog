@@ -11,12 +11,11 @@ jobs:
           aws-region: ${REGION}
           aws-access-key-id: ${ACCESS_KEY_ID}
           aws-secret-access-key: ${ACCESS_KEY_SECRET}
-
       - run:
-        name: Validating CloudFormation code 
-        command: | 
-          ls ${HOME}
-          aws cloudformation validate-template --template-body file:///${HOME}/project/products/EC2TestTemplate.yml
+          name: Validating CloudFormation code 
+          command: | 
+            ls ${HOME}
+            aws cloudformation validate-template --template-body file:///${HOME}/project/products/EC2TestTemplate.yml
 
 workflows:
   version: 2
