@@ -22,7 +22,6 @@ workflows:
   aws-cli:
     jobs:
       - test-cloudformations:
-          context: aws
           filters:
             branches:
               only:
