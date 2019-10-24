@@ -52,6 +52,7 @@ jobs:
             echo "Copying all product templates to the s3 bucket responsible for hosting the templates."
             aws s3 cp ${HOME}/project/products s3://${PRODUCT_S3_BUCKET}/ --recursive --exclude "*" --include "*.yml"
             ## Version to display
+            echo "Building for tag: ${CIRCLE_TAG}"
             VERSION=${CIRCLE_TAG}
             ## Number of versions to maintain
             KEEP_COUNT=2
