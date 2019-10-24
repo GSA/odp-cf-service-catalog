@@ -74,8 +74,8 @@ jobs:
               #Delete everything except for the last two entries
 
               #Create two files containing all versions and all versions we wish to keep
-              rm $ALL_VERSIONS
-              rm $KEEP_VERSIONS
+              test -f $ALL_VERSIONS && rm $ALL_VERSIONS
+              test -f $KEEP_VERSIONS && rm $KEEP_VERSIONS
               echo "Creating list of all versions..."
               aws servicecatalog list-provisioning-artifacts --product-id $product | jq ".ProvisioningArtifactDetails[].Id" | sed s/\"//g | sort |  tee $ALL_VERSIONS
               echo "Creating list of versions to keep..."
