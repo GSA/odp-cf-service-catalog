@@ -42,8 +42,52 @@ jobs:
       - run:
           name: Deploy product templates
           command: | 
+            # Install required packages 
+
+            ##  Install jq to parse the JSON
+            apt-get install jq -y
+        
+            
             echo "Copying all product templates to the s3 bucket responsible for hosting the templates."
             aws s3 cp ${HOME}/project/products s3://${PRODUCT_S3_BUCKET}/ --recursive --exclude "*" --include "*.yml"
+            ## Version to display
+            VERSION=${VERSION_TAG}
+            ## Number of versions to maintain
+            KEEP_COUNT=2
+            export ALL_VERSIONS=~/ALL_VERSIONS
+            export KEEP_VERSIONS=~/KEEP_VERSIONS
+
+            #Portfolio you are targeting for redeployment
+            TARGET_PORTFOLIO=${PORTFOLIO}
+            #List of all products in account
+            PRODUCTS=`aws servicecatalog search-products | jq ".ProductViewSummaries[].ProductId" | sed s/\"//g`
+            for product in ${PRODUCTS}
+            do
+              echo "Product: $product"
+              ARTIFACTS=`aws servicecatalog list-provisioning-artifacts --product-id $product | jq ".ProvisioningArtifactDetails[].Id" | sed s/\"//g | tail -n1`
+              URL=`aws servicecatalog describe-provisioning-artifact --product-id $product --provisioning-artifact-id $ARTIFACTS | jq ".Info.TemplateUrl" | sed s/\"//g`
+
+              echo $URL
+              #aws servicecatalog update-provisioning-artifact --product-id $product --provisioning-artifact-id $ARTIFACTS --active
+              aws servicecatalog create-provisioning-artifact --product-id $product --parameters Name=$VERSION,Info={LoadTemplateFromURL=$URL},Type=CLOUD_FORMATION_TEMPLATE
+              #Delete everything except for the last two entries
+
+              #Create two files containing all versions and all versions we wish to keep
+              rm $ALL_VERSIONS
+              rm $KEEP_VERSIONS
+              echo "Creating list of all versions..."
+              aws servicecatalog list-provisioning-artifacts --product-id $product | jq ".ProvisioningArtifactDetails[].Id" | sed s/\"//g | sort |  tee $ALL_VERSIONS
+              echo "Creating list of versions to keep..."
+              aws servicecatalog list-provisioning-artifacts --product-id $product | jq ".ProvisioningArtifactDetails[].Id" | sed s/\"//g | tail -n $KEEP_COUNT | sort  | tee  $KEEP_VERSIONS
+
+              DELETE_VERSIONS=$(comm -23  $ALL_VERSIONS $KEEP_VERSIONS)
+              for delete_version in $DELETE_VERSIONS
+              do
+                echo "Deleting prior version: $delete_version  ( we only keep $KEEP_COUNT versions ) "
+                aws servicecatalog delete-provisioning-artifact --product-id $product --provisioning-artifact-id $delete_version
+              done
+
+            done
             
 
          
