@@ -2,7 +2,7 @@ version: 2.1
 orbs:
   aws-cli: circleci/aws-cli@0.1.16
 jobs:
-  test-cloudformations:
+  test-templates:
     executor: aws-cli/default
     steps:
       - checkout
@@ -29,7 +29,7 @@ jobs:
               aws cloudformation validate-template --template-body file:///$template
             done
 
-  update-templates:
+  deploy-templates:
     executor: aws-cli/default
     steps:
       - checkout
@@ -52,7 +52,7 @@ jobs:
             echo "Copying all product templates to the s3 bucket responsible for hosting the templates."
             aws s3 cp ${HOME}/project/products s3://${PRODUCT_S3_BUCKET}/ --recursive --exclude "*" --include "*.yml"
             ## Version to display
-            VERSION=${VERSION_TAG}
+            VERSION=${CIRCLE_TAG}
             ## Number of versions to maintain
             KEEP_COUNT=2
             export ALL_VERSIONS=~/ALL_VERSIONS
@@ -97,12 +97,10 @@ workflows:
   version: 2
   aws-cli:
     jobs:
-      - test-cloudformations
-      - update-templates:
+      - test-templates
+      - deploy-templates:
           filters:
-            branches:
-              only:
-                # This is the list of branches which will trigger a terraform run.
-                - master   
+            tags:
+              only: /^v.*/
           requires:
             - test-cloudformations                     
