@@ -45,7 +45,8 @@ jobs:
             # Install required packages 
 
             ##  Install jq to parse the JSON
-            apt-get install jq -y
+            sudo apt-get update 
+            sudo apt-get install jq -y
         
             
             echo "Copying all product templates to the s3 bucket responsible for hosting the templates."
