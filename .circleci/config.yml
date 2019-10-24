@@ -97,7 +97,10 @@ workflows:
   version: 2
   aws-cli:
     jobs:
-      - test-templates
+      - test-templates:
+          filters:  # Build on all branches and tags ( tags filter must be present to run on tag )
+            tags:
+              only: /.*/      
       - deploy-templates:
           filters:
             tags:
