@@ -103,4 +103,4 @@ workflows:
             tags:
               only: /^v.*/
           requires:
-            - test-cloudformations                     
+            - test-templates                  
