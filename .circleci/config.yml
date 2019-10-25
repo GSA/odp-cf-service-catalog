@@ -47,7 +47,7 @@ jobs:
             ##  Install jq to parse the JSON
             sudo apt-get update 
             sudo apt-get install jq -y
-        
+              
             
             echo "Copying all product templates to the s3 bucket responsible for hosting the templates."
             aws s3 cp ${HOME}/project/products s3://${PRODUCT_S3_BUCKET}/ --recursive --exclude "*" --include "*.yml"
@@ -91,8 +91,6 @@ jobs:
 
             done
             
-
-         
 
 workflows:
   version: 2
