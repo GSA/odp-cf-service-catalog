@@ -10,7 +10,8 @@ The workflow is described below:
   * `products` - Directory containing all of the templates 
   * `service_catalog` - Contains the CloudFormation template to configure the 
 * On all commits to branch `master` deploy the template(s) in the `service_catalog`  directory to update and changes to the AWS Service Catalog.
-* On all commits to branch `master` redeploy the templates in the product(s) directory
+* On all commits with a tag with a leading `v` the CI Pipeline will redeploy the templates in the product(s) directory.
+  * Example: ``
 
 ## Table of Contents <a name="s2"></a>
 
