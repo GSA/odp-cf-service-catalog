@@ -1,0 +1,112 @@
+AWSTemplateFormatVersion: 2010-09-09
+#Parameters start here
+Parameters: 
+  SupportEmail: 
+    Type: String
+    Default: robert.lupinek@gsa.gov
+    Description: Support email address for your products.
+  SupportURL: 
+    Type: String
+    Default: https://sites.google.com/a/gsa.gov/ociso-odp-wiki/home
+    Description: Support url for your products.    
+  ProfileName: 
+    Type: String
+    Default: OCISO DevSecOps Product Portfolio
+    Description: Display name for the portfolio.     
+Resources:
+#Portfolio starts here
+  ODPPortfolio:
+    Type: AWS::ServiceCatalog::Portfolio
+    Properties: 
+      Description: OCISO DevSecOps Product Portfolio
+      DisplayName: 
+        Ref: ProfileName
+      ProviderName: String
+#New product starts here      
+  EC2TestTemplate:
+    Type: AWS::ServiceCatalog::CloudFormationProduct
+    Properties: 
+      Description: Create an EC2 Instance
+      Distributor: OCISO DevSecOps
+      Name: Create an EC2 Instance
+      Owner: OCISO DevSecOps
+      ProvisioningArtifactParameters: 
+       -
+          Description: Create an EC2 Instance
+          DisableTemplateValidation: false
+          Info: 
+            LoadTemplateFromURL : "https://s3.amazonaws.com/<S3_BUCKET_NEEDS_TO_BE_DEFINED>/EC2TestTemplate.yml"
+          Name: v1.0
+      SupportDescription: Create an EC2 Instance
+      SupportEmail: 
+        Ref: SupportEmail
+      SupportUrl: 
+        Ref: SupportURL
+    DependsOn:
+      - ODPPortfolio
+  ODPPortfolioEC2TestTemplate:
+    Type: AWS::ServiceCatalog::PortfolioProductAssociation
+    Properties: 
+      PortfolioId: !Ref ODPPortfolio
+      ProductId: !Ref EC2TestTemplate
+    DependsOn:
+      - EC2TestTemplate
+#New product starts here      
+  GuardDuty:
+    Type: AWS::ServiceCatalog::CloudFormationProduct
+    Properties: 
+      Description: Connect account to SecOps Guard Duty
+      Distributor: OCISO DevSecOps
+      Name: Guard Duty
+      Owner: OCISO DevSecOps
+      ProvisioningArtifactParameters: 
+       -
+          Description: Create an EC2 Instance
+          DisableTemplateValidation: false
+          Info: 
+            LoadTemplateFromURL : "https://s3.amazonaws.com/<S3_BUCKET_NEEDS_TO_BE_DEFINED>/GuardDuty_cloudformation.yml"
+          Name: v1.0
+      SupportDescription: Connect account to SecOps Guard Duty
+      SupportEmail: 
+        Ref: SupportEmail
+      SupportUrl: 
+        Ref: SupportURL
+    DependsOn:
+      - ODPPortfolio
+  ODPPortfolioEC2TestTemplate:
+    Type: AWS::ServiceCatalog::PortfolioProductAssociation
+    Properties: 
+      PortfolioId: !Ref ODPPortfolio
+      ProductId: !Ref GuardDuty
+    DependsOn:
+      - GuardDuty    
+#New product starts here      
+  ISECrossAccountRoles:
+    Type: AWS::ServiceCatalog::CloudFormationProduct
+    Properties: 
+      Description: Sets up Cross Account Roles to allow the ISE team to provide support during incidents and audits.
+      Distributor: OCISO DevSecOps
+      Name: ISE Cross Account Roles
+      Owner: OCISO DevSecOps
+      ProvisioningArtifactParameters: 
+       -
+          Description: Default version.
+          DisableTemplateValidation: false
+          Info: 
+            LoadTemplateFromURL : "https://s3.amazonaws.com/<S3_BUCKET_NEEDS_TO_BE_DEFINED>/ISE-AWS-CrossAccount-Roles.yml"
+          Name: v1.0
+      SupportDescription: Sets up Cross Account Roles to allow the ISE team to provide support during incidents and audits.
+      SupportEmail: 
+        Ref: SupportEmail
+      SupportUrl: 
+        Ref: SupportURL
+    DependsOn:
+      - ODPPortfolio
+  ODPPortfolioEC2TestTemplate:
+    Type: AWS::ServiceCatalog::PortfolioProductAssociation
+    Properties: 
+      PortfolioId: !Ref ODPPortfolio
+      ProductId: !Ref ISECrossAccountRoles
+    DependsOn:
+      - ISECrossAccountRoles  
+
